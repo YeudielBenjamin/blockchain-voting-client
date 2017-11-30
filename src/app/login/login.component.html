@@ -1,0 +1,27 @@
+<div class="login-wrapper">
+    <form class="login" #loginForm="ngForm" (ngSubmit)="login()">
+        <label class="title">
+            <h3 class="welcome">Bienvenido a </h3>
+            Blockchain voting system
+            <h5 class="hint">Inicia sesión con tus credenciales</h5>
+        </label>
+        <div class="login-group">
+            <input class="username" type="text" id="user" name="user" placeholder="Usuario" [(ngModel)]="user" #userInput="ngModel" >
+            <input class="password" type="password" id="password" name="password" placeholder="Contraseña" [(ngModel)]="password" #passwordInput="ngModel" >
+            
+            <div class="checkbox">
+                <input type="checkbox" id="rememberme">
+                <label for="rememberme">
+                    Recuérdame
+                </label>
+            </div>
+            <div [class.active]="errors" class="error">
+                Usuario o contraseña inválidos
+            </div>
+            <button type="submit" class="btn btn-primary">SIGUIENTE</button>
+            <!--<a href="javascript://" class="signup">Sign up for a Company ID</a>-->
+        </div>
+    </form>
+</div>
+    
+    
