@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VoteService } from "./vote.service";
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: 'app-vote',
@@ -8,17 +10,24 @@ import { VoteService } from "./vote.service";
 })
 export class VoteComponent implements OnInit {
 
+  elections = [];
+  url = environment.baseUrl + "election-image/";
+
   constructor(
     private _voteService: VoteService
   ) { }
 
   ngOnInit() {
-    if (localStorage){
-      let keys = JSON.parse(localStorage.getItem("keys"));
-      let publicKey = keys.publicKey;
-      let privateKey = keys.privateKey;
-      this._voteService.vote("AMLO", publicKey, privateKey).subscribe(console.log);
-    }
+    this._voteService.getElections().subscribe(
+      response=> {
+        this.elections = response.data.elections;
+        console.log(this.elections);
+        
+      },
+      error => {
+        console.error(error);
+      }
+    );
     
   }
 

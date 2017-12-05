@@ -1,3 +1,14 @@
-<p>
-  vote works!
-</p>
+<div class="row">
+  <div *ngFor="let election of elections" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <a [routerLink]="['/vote', election.id]" class="card clickable">
+          <div class="card-img">
+              <img [src]="url + election.image" alt="image">
+          </div>
+          <div class="card-block">
+              <p class="card-text">
+                  {{election.title}}
+              </p>
+          </div>
+      </a>
+  </div>
+</div>

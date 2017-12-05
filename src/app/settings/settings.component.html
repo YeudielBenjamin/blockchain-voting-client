@@ -1,3 +1,19 @@
-<p>
-  settings works!
-</p>
+<h1>Welcome to your settings page</h1>
+
+<clr-tabs>
+  <clr-tab>
+      <button clrTabLink id="link1">Personal</button>
+      <clr-tab-content id="content1" *clrIfActive="true">
+      Hello
+      </clr-tab-content>
+  </clr-tab>
+  <clr-tab>
+      <button clrTabLink>Security</button>
+      <clr-tab-content *clrIfActive>
+        <h1>Pair keys</h1>
+        <p>Public key: {{publicKey}}</p>
+        <p>Private key: {{privateKey}}</p>
+      </clr-tab-content>
+  </clr-tab>
+</clr-tabs>
+

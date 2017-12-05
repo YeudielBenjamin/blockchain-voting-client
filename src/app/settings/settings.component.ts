@@ -8,19 +8,32 @@ import { SettingsService } from "./settings.service";
 })
 export class SettingsComponent implements OnInit {
 
+  publicKey: string;
+  privateKey: string;
+
   constructor(
     private _settingsService: SettingsService
   ) { }
 
   ngOnInit() {
-    this._settingsService.getKeys().subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.error(error);
+    if (localStorage){
+      let data = localStorage.getItem("keys");
+      if (data){
+        let keys = JSON.parse(data);
+        this.publicKey = keys.publicKey;
+        this.privateKey = keys.privateKey;
       }
-    );
+      else {
+        this._settingsService.getKeys().subscribe(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      }
+    }
   }
 
 }

@@ -1,28 +1,45 @@
-<form>
+<form #electionForm="ngForm" (ngSubmit)="createElection()">
     <section class="form-block">
         <label>Create a new election</label>
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" id="title" placeholder="Enter title here">
-        </div>
-        <div class="form-group">
-            <label for="aForm_2">Another form field</label>
-            <input type="password" id="aForm_2" placeholder="Enter another value here" size="35">
-        </div>
-        <div class="form-group">
-            <label for="aForm_3">A select box</label>
-            <div class="select">
-                <select id="aForm_3">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                    <option>Option 4</option>
-                </select>
-            </div>
+            <input type="text" id="title" placeholder="Enter title here" #titleInput="ngModel" name="title" [(ngModel)]="titleEl" >
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" rows="5"></textarea>
+            <textarea id="description" rows="5" #descriptionInput="ngModel" [(ngModel)]="descriptionEl" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="options">Options</label>
+            <textarea id="options" rows="3" name="options" #optionsInput="ngModel" [(ngModel)]="optionsEl" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" placeholder="Upload image" (change)="fileChangeEvent($event)">
+        </div>
+    </section>
+    <section class="form-block">
+        <label>Candidates</label>
+        <div class="row">
+            <div *ngFor="let candidate of candidates" class="card col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <div class="card-img">
+                    <img [src]="url + candidate.image" alt="image" class="candidate-img">
+                </div>
+                <div class="card-block">
+                    <div class="card-title">
+                        {{candidate.name}}
+                    </div>
+                    <div class="card-text">
+                        {{candidate.bio}}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="checkbox-inline">
+                        <input type="checkbox" [id]="candidate.id" (click)="checkedCandidate($event)" >
+                        <label [for]="candidate.id">Include</label>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </section>

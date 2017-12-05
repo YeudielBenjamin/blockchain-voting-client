@@ -3,21 +3,23 @@ import { Http, Response, Headers, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Subject } from 'rxjs/Subject';
 
+import { Election } from "../shared/models/election";
+
 import 'rxjs/add/operator/catch';
 import "rxjs/add/operator/map";
 
 import { environment } from "../../environments/environment";
 
 @Injectable()
-export class VoteService{
+export class ElectionService{
     public url: string;
 
     constructor(private _http: Http){
         this.url = environment.baseUrl;
     }
 
-    public vote(vote, publicKey, privateKey){
-        let params = JSON.stringify({vote, publicKey, privateKey});
+    public saveElection(election: Election){
+        let params = JSON.stringify(election);
         let headers = new Headers({"Content-Type": "application/json"});
         if (localStorage){
             let hash = localStorage.getItem("auth");
@@ -25,35 +27,35 @@ export class VoteService{
         }
         
         return this._http
-                    .post(this.url+ "transaction", params, {headers})
+                    .post(this.url+ "election", params, {headers})
                     .map(response => response.json())
                     .catch(this.catchError);
     }
 
-    public getElections(){
-        let headers;
-        if (localStorage){
+    public uploadImage(files: Array<File>){        
+        return new Promise((resolve, reject) => {
+            var formData:any = new FormData();
+            var xhr = new XMLHttpRequest();
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append("image", files[i], files[i].name);
+            }
+
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            }
+
             let hash = localStorage.getItem("auth");
-            headers = new Headers({"Authorization": hash});
-        }
-
-        return this._http
-                    .get(this.url + "election", {headers})
-                    .map(response => response.json())
-                    .catch(this.catchError);
-    }
-
-    public getElection(id: string){
-        let headers;
-        if (localStorage){
-            let hash = localStorage.getItem("auth");
-            headers = new Headers({"Authorization": hash});
-        }
-
-        return this._http
-                    .get(this.url + `election/${id}`, {headers})
-                    .map(response => response.json())
-                    .catch(this.catchError);
+            xhr.open("POST", this.url + "election-image", true);
+            xhr.setRequestHeader("Authorization", hash);
+            xhr.send(formData);
+        });
     }
 
     private catchError(error: Response | any){
@@ -66,5 +68,5 @@ export class VoteService{
             errMsg = error.message ? error.message : error.toString();
         }
         return Observable.throw(errMsg);
-}
+    }
 }

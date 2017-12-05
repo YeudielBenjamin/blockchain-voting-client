@@ -3,21 +3,23 @@ import { Http, Response, Headers, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Subject } from 'rxjs/Subject';
 
+import { Candidate } from "../shared/models/candidate";
+
 import 'rxjs/add/operator/catch';
 import "rxjs/add/operator/map";
 
 import { environment } from "../../environments/environment";
 
 @Injectable()
-export class VoteService{
+export class CandidateService{
     public url: string;
 
     constructor(private _http: Http){
         this.url = environment.baseUrl;
     }
 
-    public vote(vote, publicKey, privateKey){
-        let params = JSON.stringify({vote, publicKey, privateKey});
+    public saveCandidate(candidate: Candidate){
+        let params = JSON.stringify(candidate);
         let headers = new Headers({"Content-Type": "application/json"});
         if (localStorage){
             let hash = localStorage.getItem("auth");
@@ -25,12 +27,12 @@ export class VoteService{
         }
         
         return this._http
-                    .post(this.url+ "transaction", params, {headers})
+                    .post(this.url+ "candidate", params, {headers})
                     .map(response => response.json())
                     .catch(this.catchError);
     }
 
-    public getElections(){
+    public getCandidates(){
         let headers;
         if (localStorage){
             let hash = localStorage.getItem("auth");
@@ -38,25 +40,39 @@ export class VoteService{
         }
 
         return this._http
-                    .get(this.url + "election", {headers})
+                    .get(this.url + "candidate/", {headers})
                     .map(response => response.json())
                     .catch(this.catchError);
     }
 
-    public getElection(id: string){
-        let headers;
-        if (localStorage){
-            let hash = localStorage.getItem("auth");
-            headers = new Headers({"Authorization": hash});
-        }
+    public uploadImage(files: Array<File>){        
+        return new Promise((resolve, reject) => {
+            var formData:any = new FormData();
+            var xhr = new XMLHttpRequest();
 
-        return this._http
-                    .get(this.url + `election/${id}`, {headers})
-                    .map(response => response.json())
-                    .catch(this.catchError);
+            for (var i = 0; i < files.length; i++) {
+                formData.append("image", files[i], files[i].name);
+            }
+
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            }
+
+            let hash = localStorage.getItem("auth");
+            xhr.open("POST", this.url + "candidate-image", true);
+            xhr.setRequestHeader("Authorization", hash);
+            xhr.send(formData);
+        });
     }
 
     private catchError(error: Response | any){
+        console.log(error);
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';

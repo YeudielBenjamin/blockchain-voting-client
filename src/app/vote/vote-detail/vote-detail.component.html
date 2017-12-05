@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-lg-6 col-xs-12">
+    <div class="card">
+      <div class="card-img">
+          <img [src]="url + election.image">
+      </div>
+      <div class="card-block">
+          <h4 class="card-title">{{ election.title }}</h4>
+          <p class="card-text">
+          {{ election.description }}
+          </p>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-xs-12">
+    <h1>Vote now!</h1>
+      <div *ngFor="let candidate of election.candidates" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <a class="card clickable" (click)="selectCandidate(candidate)">
+          <div class="card-img">
+            <img [src]="urlCandidate + candidate.image" alt="image" class="candidate-img">
+          </div>
+          <div class="card-block">
+              <div class="card-title">
+                  <p>{{candidate.name}}</p>
+              </div>
+            <p class="card-text">
+                {{candidate.bio}}
+            </p>
+          </div>
+        </a>
+      </div>
+  </div>
+</div>
+
+
+<clr-modal [(clrModalOpen)]="selectVote">
+    <h3 class="modal-title">Confirmar Voto</h3>
+    <div class="modal-body">
+        <p>Votar por {{selectedCandidate.name}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger-outline" (click)="selectVote = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="vote()">Vote</button>
+    </div>
+</clr-modal>
+

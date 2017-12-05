@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { ClarityModule } from "clarity-angular";
@@ -13,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from "./login/login.service";
 import { SettingsService } from "./settings/settings.service";
 import { VoteService } from "./vote/vote.service";
+import { ElectionService } from "./election/election.service";
+import { CandidateService } from "./candidate/candidate.service";
 
 /** Módulos */
 import { AppRoutingModule } from "./app-routing.module";
@@ -20,6 +23,8 @@ import { ElectionComponent } from './election/election.component';
 import { UserComponent } from './user/user.component';
 import { SettingsComponent } from './settings/settings.component';
 import { VoteComponent } from './vote/vote.component';
+import { VoteDetailComponent } from './vote/vote-detail/vote-detail.component';
+import { CandidateComponent } from './candidate/candidate.component';
 
 
 @NgModule({
@@ -30,10 +35,13 @@ import { VoteComponent } from './vote/vote.component';
     ElectionComponent,
     UserComponent,
     SettingsComponent,
-    VoteComponent
+    VoteComponent,
+    VoteDetailComponent,
+    CandidateComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
@@ -42,7 +50,9 @@ import { VoteComponent } from './vote/vote.component';
   providers: [
     LoginService,
     SettingsService,
-    VoteService
+    VoteService,
+    ElectionService,
+    CandidateService
   ],
   bootstrap: [AppComponent]
 })

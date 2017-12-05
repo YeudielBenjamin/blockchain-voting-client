@@ -8,6 +8,9 @@ import { UserComponent } from "./user/user.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { ElectionComponent } from "./election/election.component";
 import { VoteComponent } from "./vote/vote.component";
+import { VoteDetailComponent } from "./vote/vote-detail/vote-detail.component";
+import { CandidateComponent } from "./candidate/candidate.component";
+
 import { environment } from "../environments/environment"
 
 const APP_ROUTES: Routes = [
@@ -17,7 +20,9 @@ const APP_ROUTES: Routes = [
     { path: "user", component: UserComponent },
     { path: "election", component: ElectionComponent },
     { path: "settings", component: SettingsComponent },
-    { path: "vote", component: VoteComponent }
+    { path: "vote", component: VoteComponent },
+    { path: "vote/:id", component: VoteDetailComponent },
+    { path: "candidate", component: CandidateComponent }
 ];
 
 @NgModule({
