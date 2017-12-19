@@ -2,16 +2,16 @@
     <section class="form-block">
         <label>Create a new election</label>
         <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" placeholder="Enter title here" #titleInput="ngModel" name="title" [(ngModel)]="titleEl" >
+            <label class="required" for="title">Title</label>
+            <input type="text" id="title" placeholder="Enter title here" #titleInput="ngModel" name="title" [(ngModel)]="titleEl" required>
         </div>
         <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" rows="5" #descriptionInput="ngModel" [(ngModel)]="descriptionEl" name="description"></textarea>
+            <label class="required" for="description">Description</label>
+            <textarea id="description" rows="5" #descriptionInput="ngModel" [(ngModel)]="descriptionEl" name="description" required></textarea>
         </div>
         <div class="form-group">
-            <label for="options">Options</label>
-            <textarea id="options" rows="3" name="options" #optionsInput="ngModel" [(ngModel)]="optionsEl" ></textarea>
+            <label class="required" for="options">Options</label>
+            <textarea id="options" rows="3" name="options" #optionsInput="ngModel" [(ngModel)]="optionsEl" required></textarea>
         </div>
         <div class="form-group">
             <label for="image">Image</label>
@@ -43,6 +43,16 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </section>
+    <div *ngIf="success" class="alert" [ngClass]="alertClass">
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" [attr.shape]="shape"></clr-icon>
+                </div>
+                <span class="alert-text">{{alert_text}}</span>
+            </div>
+        </div>
+    </div>
 </form>
 
 

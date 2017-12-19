@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { ClarityModule } from "clarity-angular";
 import { HttpModule } from '@angular/http';
@@ -16,6 +16,7 @@ import { SettingsService } from "./settings/settings.service";
 import { VoteService } from "./vote/vote.service";
 import { ElectionService } from "./election/election.service";
 import { CandidateService } from "./candidate/candidate.service";
+import { UserService } from "./user/user.service";
 
 /** Módulos */
 import { AppRoutingModule } from "./app-routing.module";
@@ -52,7 +53,8 @@ import { CandidateComponent } from './candidate/candidate.component';
     SettingsService,
     VoteService,
     ElectionService,
-    CandidateService
+    CandidateService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

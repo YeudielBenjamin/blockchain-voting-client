@@ -4,11 +4,28 @@
   <clr-tab>
       <button clrTabLink id="link1">Personal</button>
       <clr-tab-content id="content1" *clrIfActive="true">
-      Hello
+        <section class="form-block">
+          <div class="form-group">
+            <label for="name">Nombre completo</label>
+            <input type="text" id="name" size="35" readonly [value]="user?.nombre">
+          </div>
+          <div class="form-group">
+            <label for="curp">CURP</label>
+            <input type="text" id="curp" size="35" readonly [value]="user?.curp">
+          </div>
+          <div class="form-group">
+            <label for="clave_elector">Clave de elector</label>
+            <input type="text" id="clave_elector" size="35" readonly [value]="user?.clave_elector">
+          </div>
+          <div class="form-group">
+            <label for="ine">Código de INE</label>
+            <input type="text" id="ine" size="35" readonly [value]="user?.ine">
+          </div>
+        </section>
       </clr-tab-content>
   </clr-tab>
   <clr-tab>
-      <button clrTabLink>Security</button>
+      <button clrTabLink>Votes</button>
       <clr-tab-content *clrIfActive>
         <h1>Pair keys</h1>
         <p>Public key: {{publicKey}}</p>

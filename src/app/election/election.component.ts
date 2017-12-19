@@ -22,6 +22,17 @@ export class ElectionComponent implements OnInit {
   candidates: Candidate[];
   selectedCandidates: string[] = [];
   url: string = environment.baseUrl + "candidate-image/";
+  success: boolean = false;
+  alertClass: string;
+  shapes = {
+    "alert-danger": "exclamation-circle",
+    "alert-warning": "exclamation-triangle",
+    "alert-info": "info-circle",
+    "alert-success": "check-circle"
+  };
+
+  shape: string;
+  alert_text: string;
 
   constructor(
     private _electionService: ElectionService,
@@ -54,7 +65,7 @@ export class ElectionComponent implements OnInit {
     let options = this.optionsEl.split(",");
     options = options.map(result => result.trim());
     this.election = new Election(this.titleEl, this.descriptionEl, options, "", this.selectedCandidates);
-    if (this.filesToUpload.length > 0){
+    if (this.filesToUpload && this.filesToUpload.length > 0){
       this._electionService.uploadImage(this.filesToUpload).then(
         (response : MyResponse) => {
           this.election.setImage(response.data.filename);
@@ -62,6 +73,13 @@ export class ElectionComponent implements OnInit {
         },
         error => {
           console.error(error);
+          this.alertClass= "alert-danger";
+          this.shape = this.shapes[this.alertClass];
+          this.alert_text = error.responseJSON.msg;
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 5000);
         }
       )
     }
@@ -75,8 +93,22 @@ export class ElectionComponent implements OnInit {
     this._electionService.saveElection(this.election).subscribe(
       response => {
         console.log(response);
+        this.alertClass= "alert-success";
+        this.shape = this.shapes[this.alertClass];
+        this.alert_text = response.msg;
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 5000);
       }, error=> {
         console.error(error);
+        this.alertClass= "alert-danger";
+        this.shape = this.shapes[this.alertClass];
+        this.alert_text = error.responseJSON.msg;
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 5000);
       }
     );
   }

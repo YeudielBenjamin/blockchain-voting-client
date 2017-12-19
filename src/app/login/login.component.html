@@ -1,5 +1,5 @@
 <div class="login-wrapper">
-    <form class="login" #loginForm="ngForm" (ngSubmit)="login()">
+    <form *ngIf="!changePass; else changePasswordTemplate" class="login" #loginForm="ngForm" (ngSubmit)="login()">
         <label class="title">
             <h3 class="welcome">Bienvenido a </h3>
             Blockchain voting system
@@ -16,12 +16,30 @@
                 </label>
             </div>
             <div [class.active]="errors" class="error">
-                Usuario o contraseña inválidos
+                {{errorMsg}}
             </div>
             <button type="submit" class="btn btn-primary">SIGUIENTE</button>
             <!--<a href="javascript://" class="signup">Sign up for a Company ID</a>-->
         </div>
     </form>
+    <ng-template #changePasswordTemplate>
+        <form class="login" #updatePassForm="ngForm" (ngSubmit)="changePassword()" >
+            <label class="title">
+                <h3 class="welcome">Acción requerida</h3>
+                <h5 class="hint">Por favor cambie su contraseña por una nueva</h5>
+            </label>
+            <div class="login-group">
+                <input class="password" type="password" id="pass1" name="pass1" placeholder="Nueva contraseña" [(ngModel)]="pass1" #pass1Input="ngModel" >
+                <input class="password" type="password" id="pass2" name="pass2" placeholder="Repita nueva contraseña" [(ngModel)]="pass2" #pass2Input="ngModel" >
+
+                <div [class.active]="errors" class="error">
+                    {{errorMsg}}
+                </div>
+                <button type="submit" class="btn btn-primary">ACTUALIZAR</button>
+                <!--<a href="javascript://" class="signup">Sign up for a Company ID</a>-->
+            </div>
+        </form>
+    </ng-template>
 </div>
     
     

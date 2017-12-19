@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "@webcomponents/custom-elements": "^1.0.0",
+    "bigchaindb-driver": "^3.1.1",
     "clarity-angular": "^0.10.12",
     "clarity-icons": "^0.10.12",
     "clarity-ui": "^0.10.12",

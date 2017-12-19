@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Blockchain voting interface';
-  user: User = new User("");
+  user = {};
   private subscription: Subscription;
 
   constructor(
@@ -27,6 +27,8 @@ export class AppComponent implements OnInit, OnDestroy {
     if (localStorage){
       let savedUser = localStorage.getItem("user");
       if (savedUser){
+        console.log("Saved User:");
+        console.log(savedUser);
         this._loginService.userChanged(JSON.parse(savedUser));
       }
     }

@@ -26,26 +26,42 @@ export class LoginService{
         this.subject.next(user);
     }
 
-    public login(username, password) : Observable<User>{
+    public login(username, password) : Observable<any>{
         let params = JSON.stringify({username, password});
         let headers = new Headers({"Content-Type": "application/json"});
 
         return this._http
-                    .post(this.url+ "login", params, {headers})
+                    .post(this.url+ "user/login", params, {headers})
                     .map(this.proccessResponse)
                     .catch(this.catchError);
     }
 
-    private proccessResponse(response: any): User{
-        let res = response.json();
-        let user = new User("");
-        Object.assign(user, res.data.user);
+    public changePassword(password, authHeader){
+        let params = JSON.stringify({password});
+        let headers = new Headers({"Content-Type": "application/json"});
+        headers.append("Authorization", authHeader);
 
-        if (localStorage){
-            localStorage.setItem("auth", res.data.token);
-            localStorage.setItem("user", JSON.stringify(user));
+        return this._http.put(this.url + "user/update-password", params, {headers})
+                    .map(response => response.json())
+                    .catch(this.catchError);
+    }
+
+    private proccessResponse(response: any): any {
+        let res = response.json();
+        console.log(res);
+        if (res.data.change_pass){
+            return res.data;
         }
-        return user;
+        else{
+            let user = res.data.user;
+    
+            if (localStorage){
+                localStorage.setItem("auth", res.data.token);
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+            return user;
+        }
+        
     }
 
     private catchError(error: Response | any){

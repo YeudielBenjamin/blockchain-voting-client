@@ -4,17 +4,17 @@
             <span class="title">{{title}}</span>
         </div>
         <div class="header-nav">
-            <a *ngIf="user.username" href="javascript://" class="nav-link nav-text">Dashboard</a>
-            <a *ngIf="user.username" href="vote" class="nav-link nav-text">Elections</a>
+            <a *ngIf="user.nombre" href="javascript://" class="nav-link nav-text">Dashboard</a>
+            <a *ngIf="user.nombre" href="vote" class="nav-link nav-text">Elections</a>
         </div>
         <div class="header-actions">
-            <a *ngIf="user.username == '';else userLogged" href="login" class="nav-link nav-icon">
+            <a *ngIf="!user.nombre ;else userLogged" href="login" class="nav-link nav-icon">
                 <clr-icon shape="user"></clr-icon>
             </a>
             <ng-template #userLogged>
               <clr-dropdown>
                   <button class="nav-text" clrDropdownTrigger>
-                      {{ user.username }}
+                      {{ user.nombre }}
                       <clr-icon shape="caret down"></clr-icon>
                   </button>
                   <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
@@ -35,7 +35,7 @@
                     <input id="tab_user" type="checkbox">
                     <label for="tab_user">Users</label>
                     <ul class="nav-list">
-                        <li><a href="user" class="nav-link">Add new user</a></li>
+                        <li><a href="user" class="nav-link">List users</a></li>
                     </ul>
                 </section>
                 <section class="nav-group collapsible">

@@ -2,17 +2,27 @@
     <section class="form-block">
         <label>Create a new candidate</label>
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Enter name here" #nameInput="ngModel" name="name" [(ngModel)]="nameCan" >
+            <label class="required" for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter name here" #nameInput="ngModel" name="name" [(ngModel)]="nameCan" required>
         </div>
         <div class="form-group">
-            <label for="bio">Bio</label>
-            <textarea id="bio" rows="5" #bioInput="ngModel" [(ngModel)]="bioCan" name="bio"></textarea>
+            <label class="required" for="bio">Bio</label>
+            <textarea id="bio" rows="5" #bioInput="ngModel" [(ngModel)]="bioCan" name="bio" required></textarea>
         </div>
         <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" placeholder="Upload image" (change)="fileChangeEvent($event)">
+            <label class="required" for="image">Image</label>
+            <input type="file" placeholder="Upload image" (change)="fileChangeEvent($event)" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </section>
+    <div *ngIf="success" class="alert" [ngClass]="alertClass">
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" [attr.shape]="shape"></clr-icon>
+                </div>
+                <span class="alert-text">{{alert_text}}</span>
+            </div>
+        </div>
+    </div>
 </form>

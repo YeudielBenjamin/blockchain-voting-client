@@ -45,7 +45,7 @@ export class CandidateService{
                     .catch(this.catchError);
     }
 
-    public uploadImage(files: Array<File>){        
+    public uploadImage(files: Array<File>){      
         return new Promise((resolve, reject) => {
             var formData:any = new FormData();
             var xhr = new XMLHttpRequest();
